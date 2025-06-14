@@ -1,0 +1,88 @@
+<div>
+    <h2 class="text-xl lg:text-2xl font-medium">Selecione o Sistema SERPRO Relacionado ao Relato: </h2>
+
+    <div class="grid grid-col-1 md:grid-cols-2 gap-4 mt-2 mx-6 lg:mx-12">
+        @for (sistema of sistemas; track sistema.id) {
+            @if (sistema.id == 1) {
+                <div>
+                    <div class="card flex justify-center items-center gap-2">
+                        <p-toast />
+                        <p-confirmpopup #cp>
+                            <ng-template #headless let-message>
+                                <div class="w-[20rem] rounded-lg bg-(--cor-principal) p-6">
+                                    <p class="w-full text-white mb-6">Houve alguma alteração em seus dados de acesso do portal "Gov.br" (como e-mail ou senha)?</p>
+                                    <div class="flex items-center justify-center gap-3">
+                                        <p-button 
+                                            (onClick)="cp.onAccept()" 
+                                            label="Sim" 
+                                            styleClass="p-button-primary py-6" 
+                                            [style]="{'background-color': '#ffffff', 'border': 'none', 'color': '#155BBC', 'border-radius': '32px', padding: '8px 40px'}"
+                                        />
+                                        <p-button 
+                                            (onClick)="cp.onReject()" 
+                                            label="Não" 
+                                            styleClass="p-button-outlined" 
+                                            [style]="{'background-color': '#ffffff', 'border': 'none', 'color': '#155BBC', 'border-radius': '32px', padding: '8px 40px'}"
+                                        />
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-confirmpopup>
+                    </div>
+    
+                    <button
+                        type="button"
+                        (click)="selecionarSistema(sistema.id); confirm($event)"
+                        [ngClass]="sistema.id === sistemaSelecionado
+                        ? 'bg-[var(--cor-principal)] text-white'
+                        : 'bg-white text-(--cor-principal)'"
+                        class="w-full rounded-lg h-14 shadow transition-colors font-medium focus:outline-none shadow-md text-lg lg:text-xl"
+                    >
+                        {{ sistema.titulo }}
+                    </button>
+                </div>
+            } @else {
+                <button
+                    type="button"
+                    (click)="selecionarSistema(sistema.id)"
+                    [ngClass]="sistema.id === sistemaSelecionado
+                    ? 'bg-[var(--cor-principal)] text-white'
+                    : 'bg-white text-(--cor-principal)'"
+                    class="rounded-lg h-14 shadow transition-colors font-medium focus:outline-none shadow-md text-lg lg:text-xl"
+                >
+                    {{ sistema.titulo }}
+                </button>
+            }
+        }
+    </div>
+
+    @if (sistemaSelecionado === 99) {
+        <div class="flex flex-col gap-4 mx-4 mt-8">
+            <div>
+                <h2 class="text-xl font-bold mb-2">Descrição Detalhada do Relato:</h2>
+                <p class="text-gray-600 text-sm">Descreva seu relato com riqueza de detalhes, no entanto, não inclua dados pessoais no relato.</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <textarea
+                    placeholder="Escreva seu relato aqui"
+                    class="w-full h-48 p-4 bg-(--cor-cinza-claro) rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-md"
+                    maxlength="1000"
+                ></textarea>
+
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">
+                        Mínimo de caracteres ({{ caracteresDigitados }}/1000)
+                    </span>
+                    
+                    <button 
+                        (click)="salvarDescricao()"
+                        class="bg-[#8CC63F] text-white px-6 py-2 rounded-lg disabled:opacity-50 transition-all"
+                    >
+                        Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
