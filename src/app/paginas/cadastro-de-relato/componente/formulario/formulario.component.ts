@@ -13,9 +13,10 @@ import { DatePicker } from 'primeng/datepicker';
 })
 export class FormularioComponent {
   opcoesFraude = [
-    { nome: 'São Paulo' },
-    { nome: 'São Paulo' },
-    { nome: 'São Paulo' },
+    { nome: 'Uso indevido de dados' },
+    { nome: 'Fraude de identidade' },
+    { nome: 'Acesso não autorizado' },
+    { nome: 'Fraude em autenticação' },
   ];
 
   date: Date | undefined;
